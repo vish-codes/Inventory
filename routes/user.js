@@ -3,10 +3,11 @@ import { History, Laptops } from "../db.js";
 
 const router = Router();
 
-router.get("/user", (req, res) => {
+router.get("/allLaptops", async(req, res) => {
+  const details = await Laptops.find({});
   res.status(200).json({
     status: "success",
-    message: "hi",
+    data: details,
   });
 });
 
