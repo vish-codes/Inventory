@@ -11,17 +11,31 @@ router.get("/user", (req, res) => {
 });
 
 router.post("/laptops", async (req, res) => {
-  const { name, assignedTo } = req.body;
-  const laptop = await Laptops.create({ laptopName: name, assignedTo });
-  await History.create({ _id: laptop._id, users: laptop.assignedTo });
+  const { laptopName, assignedTo, ownedBy, ownerName, accessories, remark } = req.body; 
+  const laptop = await Laptops.create({ laptopName, assignedTo, ownedBy, ownerName, accessories, remark });
+  await History.create({ laptopId: laptop._id, assignHistory: assignedTo });
   res.status(200).json({
     message: laptop,
   });
 });
 
-router.post("/history", async (req, res) => {
-  const id = req.body.param;
-  const history = await History.find({});
+// let tempObj = {
+//   laptopId: id,
+//   laptopName: laptop,
+//   laptopOwnedBy: ownedBy,
+//   laptopOwnerName: laptopClientName,
+//   accessories: selectedOption,
+//   employeeId: employeeId,
+// };
+
+// routes 
+// laptop schema (id name currentUser assigned-date assesories)
+
+router.get("/re-assign", async (req, res) => {
+  const {laptopId, accessories, employeeName} = req.body;
+  const laptop = await Laptops.findOne({_id:laptopId});
+  const result = await Laptops.update({});
+  res.status(200).json({message : history})
 });
 
 export { router };
