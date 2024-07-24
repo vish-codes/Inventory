@@ -11,12 +11,13 @@ router.get("/allLaptops", async(req, res) => {
   });
 });
 
-router.post("/laptops", async (req, res) => {
-  const { laptopName, assignedTo, ownedBy, ownerName, accessories, remark } = req.body; 
-  const laptop = await Laptops.create({ laptopName, assignedTo, ownedBy, ownerName, accessories, remark });
+router.post("/addLaptop", async (req, res) => {
+  const { laptopName, systemId, assignedTo, ownedBy, ownerName, accessories, remark } = req.body; 
+  const laptop = await Laptops.create({ laptopName, systemId, assignedTo, ownedBy, ownerName, accessories, remark });
   await History.create({ laptopId: laptop._id, assignHistory: assignedTo });
   res.status(200).json({
-    message: laptop,
+  status: "success",
+    data: laptop,
   });
 });
 

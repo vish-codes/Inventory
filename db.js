@@ -16,10 +16,11 @@ const laptopSchema = new mongoose.Schema({
     lowercase: true,
     minLength: 3,
    }, // "laptopName":"HP EliteBook", "assignedTo":"Anand Vish", "ownedBy":"Company", "accessories":"", "remark":""
-  assignedTo: { type: String, required: true, minLength: 2, trim: true },
+   systemId:{ type: String, required: true},
+  assignedTo: { type: String, required: true, minLength: 2, trim: true, default: "N/A" },
   ownedBy: { type: String, required: true, default :"Company" },
   ownerName: { type: String, default:"Panorama" },
-  remark: { type: String, default: "all good!" },
+  remark: { type: String, default: "None" },
   accessories : [
     {
       type: String,
