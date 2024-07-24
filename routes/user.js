@@ -32,11 +32,27 @@ router.post("/laptops", async (req, res) => {
 // routes 
 // laptop schema (id name currentUser assigned-date assesories)
 
-router.get("/re-assign", async (req, res) => {
-  const {laptopId, accessories, employeeName} = req.body;
-  const laptop = await Laptops.findOne({_id:laptopId});
-  const result = await Laptops.update({});
-  res.status(200).json({message : history})
+router.put("/re-assign/:id", async (req, res) => {
+  const { assignedTo, remark, accessories} = req.body;
+  const {id} = req.params
+  const getLaptopUser = await Laptops.findById({id});
+  const laptop = await Laptops.updateOne({_id:id},{assignedTo, remark, accessories});
+  const result = await History.updateOne({_id:id},{$push:{assignHistory:getLaptopUser.assignedTo}});
+  res.status(200).json({ message: "data updated successfully" , data : result });
+});
+
+router.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Laptops.deleteOne({ _id: id });
+    await History.deleteOne({ laptopId: id });
+    const data = await Laptops.find({})
+    res.status(200).json({ message: "success on deletion", data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ err });
+  }
 });
 
 export { router };
