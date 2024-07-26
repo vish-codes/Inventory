@@ -39,6 +39,11 @@ const laptopHistory = new mongoose.Schema({
   ],
 });
 
+laptopSchema.pre("save", function (next){
+  if(this.ownerName.length === 0) this.ownerName = "Panorama";
+  next()
+})
+
 const Laptops = mongoose.model("Laptops", laptopSchema);
 const History = mongoose.model("History", laptopHistory);
 
