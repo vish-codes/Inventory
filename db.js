@@ -26,7 +26,7 @@ const laptopSchema = new mongoose.Schema({
     },
   ],
   assignedTo: { type: String, required: true, minLength: 2, trim: true, default: "N/A", required: true },
-  empId : { type: String, required: true, trim: true },
+  empId : { type: String, required: true, trim: true, unique: true },
   remark: { type: String, default: "None" },
 });
 
