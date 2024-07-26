@@ -9,24 +9,25 @@ mongoose
   .then(() => console.log("db connected successfully"));
 
 const laptopSchema = new mongoose.Schema({
+  systemId:{ type: String, required: true, unique:true},
   laptopName: {
     type: String,
     required: true,
-    unique: true,
     lowercase: true,
     minLength: 3,
-   }, // "laptopName":"HP EliteBook", "assignedTo":"Anand Vish", "ownedBy":"Company", "accessories":"", "remark":""
-   systemId:{ type: String, required: true},
-  assignedTo: { type: String, required: true, minLength: 2, trim: true, default: "N/A" },
+  }, // "laptopName":"HP EliteBook", "assignedTo":"Anand Vish", "ownedBy":"Company", "accessories":"", "remark":""
+  date:{type: String, required: true},
   ownedBy: { type: String, required: true, default :"Company" },
   ownerName: { type: String, default:"Panorama" },
-  remark: { type: String, default: "None" },
   accessories : [
     {
       type: String,
       default: "None"
     },
-  ]
+  ],
+  assignedTo: { type: String, required: true, minLength: 2, trim: true, default: "N/A", required: true },
+  empId : { type: String, required: true, trim: true },
+  remark: { type: String, default: "None" },
 });
 
 const laptopHistory = new mongoose.Schema({
