@@ -12,8 +12,8 @@ router.get("/allLaptops", async(req, res) => {
 });
 
 router.post("/addLaptop", async (req, res) => {
-  const { laptopName, systemId, assignedTo, ownedBy, ownerName, accessories, remark } = req.body; 
-  const laptop = await Laptops.create({ laptopName, systemId, assignedTo, ownedBy, ownerName, accessories, remark });
+  const { laptopName, systemId, assignedTo, ownedBy, ownerName, accessories, remark, empId, date } = req.body; 
+  const laptop = await Laptops.create({ laptopName, systemId, assignedTo, ownedBy, ownerName, accessories, remark, empId, date });
   await History.create({ laptopId: laptop._id, assignHistory: assignedTo });
   const laptops = await Laptops.find({})
   res.status(200).json({
