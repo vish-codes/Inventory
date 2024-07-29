@@ -45,7 +45,7 @@ async function createAdmin(req, res) {
 
 async function login (req, res){
   const {email, password} = req.body;
-  const { success } = signupBody.safeParse(req.body);
+  const { success } = loginSchema.safeParse(req.body);
 
   if (!success) {
     return res
