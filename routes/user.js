@@ -5,9 +5,11 @@ const router = Router();
 
 router.get("/allLaptops", async(req, res) => {
   const details = await Laptops.find({});
+  const history = await History.find({});
   res.status(200).json({
     status: "success",
     data: details,
+    history
   });
 });
 
@@ -59,5 +61,14 @@ router.delete("/delete/:id", async (req, res) => {
     res.status(500).json({ err });
   }
 });
+
+router.get("/history/:id", async (req, res) => {
+  const { id } = req.params;
+  const history = await History.findOne({ laptopId: id });
+  res.status(200).json({
+    status: "success",
+    data: history,
+  });
+})
 
 export { router };
