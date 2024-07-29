@@ -19,6 +19,7 @@ const loginSchema = z.object({
 
 
 async function createAdmin(req, res) {
+
   const { email, password } = req.body;
   const response = await Admin.findOne({ email });
   if (response) {
@@ -44,6 +45,14 @@ async function createAdmin(req, res) {
 
 async function login (req, res){
   const {email, password} = req.body;
+  const { success } = signupBody.safeParse(req.body);
+
+  if (!success) {
+    return res
+      .status(411)
+      .json({ message: "Email already taken / incorrect inputs" });
+  }
+
   const response = await Admin.findOne({ email });
   if (!response) {
     return res.status(400).json({ message: "Admin doesn't exists" });
