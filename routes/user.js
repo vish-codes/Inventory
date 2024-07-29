@@ -39,7 +39,9 @@ router.put("/reAssign/:id", async (req, res) => {
   const {id} = req.params
   const getLaptopUser = await Laptops.findById({_id:id});
   const laptop = await Laptops.updateOne({_id:id},{assignedTo, remark, accessories});
+  if(getLaptopUser.assignedTo !== assignedTo){
   const result = await History.updateOne({laptopId:id},{$push:{assignHistory:getLaptopUser.assignedTo}});
+  }
   const finalData = await Laptops.find({});
   res.status(200).json({ message: "data updated successfully" , data : finalData });
 });
