@@ -29,7 +29,7 @@ router.post("/login", login);
  * @access public
  */
 
-router.get("/allLaptops",authMiddleware, getAllItems);
+router.get("/allLaptops", getAllItems);
 
 /**
  * @desc add new laptop
@@ -53,7 +53,7 @@ router.put("/reAssign/:id", reAssign);
  * @access public
  */
 
-router.delete("/delete/:id",deleteLaptop );
+router.delete("/delete/:id",authMiddleware,deleteLaptop );
 
 /**
  * @desc get laptops history
