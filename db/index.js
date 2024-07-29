@@ -8,6 +8,26 @@ mongoose
   .connect(MONGO_URI)
   .then(() => console.log("db connected successfully"));
 
+const adminSchema = new mongoose.Schema({
+  email: {  type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+    minLength: 3,
+    maxLength: 30,
+  },
+  password: { type: String, required: true, minLength: 6 },
+})
+
+
+  /**
+ * Account Schema
+ * @module models/laptopSchema
+ * @requires mongoose
+ */
+
+
 const laptopSchema = new mongoose.Schema({
   systemId:{ type: String, required: true, unique:true},
   laptopName: {
@@ -15,7 +35,7 @@ const laptopSchema = new mongoose.Schema({
     required: true,
     lowercase: true,
     minLength: 3,
-  }, // "laptopName":"HP EliteBook", "assignedTo":"Anand Vish", "ownedBy":"Company", "accessories":"", "remark":""
+  }, 
   date:{type: String, required: true},
   ownedBy: { type: String, required: true, default :"Company" },
   ownerName: { type: String, default:"Panorama" },
@@ -29,6 +49,13 @@ const laptopSchema = new mongoose.Schema({
   empId : { type: String, required: true, trim: true, unique: true },
   remark: { type: String, default: "None" },
 });
+
+/**
+ * Account Schema
+ * @module models/historySchema
+ * @requires mongoose
+ */
+
 
 const laptopHistory = new mongoose.Schema({
   laptopId: { type: mongoose.Schema.Types.ObjectId, ref: "Laptops" },
@@ -44,7 +71,8 @@ laptopSchema.pre("save", function (next){
   next()
 })
 
+const Admin = mongoose.model("Admin", adminSchema);
 const Laptops = mongoose.model("Laptops", laptopSchema);
 const History = mongoose.model("History", laptopHistory);
 
-export { Laptops, History };
+export { Laptops, History, Admin };
