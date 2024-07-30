@@ -29,7 +29,7 @@ router.post("/login", login);
  * @access public
  */
 
-router.get("/allLaptops", getAllItems);
+router.get("/allLaptops", authMiddleware, getAllItems);
 
 /**
  * @desc add new laptop
@@ -37,7 +37,7 @@ router.get("/allLaptops", getAllItems);
  * @access public
  */
 
-router.post("/addLaptop", addNewLaptop);
+router.post("/addLaptop",authMiddleware, addNewLaptop);
 
 /**
  * @desc re assign to user
@@ -45,7 +45,7 @@ router.post("/addLaptop", addNewLaptop);
  * @access public
  */
 
-router.put("/reAssign/:id", reAssign);
+router.put("/reAssign/:id",authMiddleware, reAssign);
 
 /**
  * @desc delete entry
@@ -61,49 +61,6 @@ router.delete("/delete/:id",authMiddleware,deleteLaptop );
  * @access public
  */
 
-router.get("/history/:id", getHistory)
+router.get("/history/:id",authMiddleware, getHistory)
 
 export { router };
-
-
-// ---------------------------------------------------- // 
-
-/*
-import { Router } from "express";
-import { authMiddleware } from "../middleware/authMiddleware.js";
-import asyncHandler from "express-async-handler";
-import {
-  handleQuery,
-  signInUser,
-  signupUser,
-  updateUserInfo,
-} from "../controllers/userController.js";
-
-
-
-router.post("/signup", asyncHandler(signupUser));
-
-/**
- * @desc Login user
- * @route POST /api/user/signin
- * @access public
- */
-// router.post("/signin", asyncHandler(signInUser));
-
-/**
- * @desc Update user info.
- * @route PUT /api/v1/user
- * @access private
- */
-// router.put("/", authMiddleware, updateUserInfo);
-
-/**
- * @desc Get user info.
- * @route GET /api/v1/user/bulk
- * @access private
- */
-
-// get all user route using query parameters (important)
-// router.get("/bulk", authMiddleware, asyncHandler(handleQuery));
-
-// export { router }; */

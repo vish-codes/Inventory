@@ -12,7 +12,7 @@ function authMiddleware(req, res, next) {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     console.log('three')
-    if (decoded.userId) { // adding userId in req. object
+    if (decoded.userId) { 
       next();
     } else {
       res.status(403).json({
