@@ -131,8 +131,7 @@ async function reAssign (req, res)  {
     const result = await History.updateOne({laptopId:id},{$push:{assignHistory:getLaptopUser.assignedTo}});
     }
     const finalData = await Laptops.find({});
-    const prevUserDetails = await Laptops.findById({_id:id});
-  res.status(200).json({ message: "data updated successfully" , data : finalData, prevUserDetails  });
+  res.status(200).json({ message: "data updated successfully" , data : finalData, prevUserDetails: getLaptopUser  });
 }
 
 
