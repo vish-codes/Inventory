@@ -29,7 +29,7 @@ router.post("/login", login);
  * @access public
  */
 
-router.get("/allLaptops", authMiddleware, getAllItems);
+router.get("/allLaptops",getAllItems);
 
 /**
  * @desc add new laptop
