@@ -123,15 +123,16 @@ async function addNewLaptop (req, res) {
 
 
 async function reAssign (req, res)  {
-    const { assignedTo, remark, accessories} = req.body;
+    const { empId ,assignedTo, remark, accessories} = req.body;
     const {id} = req.params
     const getLaptopUser = await Laptops.findById({_id:id});
-    const laptop = await Laptops.updateOne({_id:id},{assignedTo, remark, accessories});
+    const laptop = await Laptops.updateOne({_id:id},{empId, assignedTo, remark, accessories});
     if(getLaptopUser.assignedTo !== assignedTo){
     const result = await History.updateOne({laptopId:id},{$push:{assignHistory:getLaptopUser.assignedTo}});
     }
     const finalData = await Laptops.find({});
-    res.status(200).json({ message: "data updated successfully" , data : finalData });
+    const prevUserDetails = await Laptops.findById({_id:id});
+  res.status(200).json({ message: "data updated successfully" , data : finalData, prevUserDetails  });
 }
 
 
