@@ -122,11 +122,11 @@ async function addNewLaptop (req, res) {
 
 
 async function reAssign (req, res)  {
-    const { empId ,assignedTo, date, remark, accessories} = req.body;
+    const { empId ,assignedTo, date, remark, accessories, laptopName, systemId} = req.body;
     const {id} = req.params
     const prevUser = await Laptops.findById({_id:id});
     if(prevUser.assignedTo !== assignedTo){
-    const laptop = await Laptops.findOneAndUpdate({_id:id},{$set:{empId ,assignedTo, date, remark, accessories, history: [...prevUser.history, {empId:prevUser.empId, assignedTo:prevUser.assignedTo, fromDate: prevUser.date, toDate:date, accessories: prevUser.accessories }]
+    const laptop = await Laptops.findOneAndUpdate({_id:id},{$set:{empId ,assignedTo, date, remark, accessories, history: [...prevUser.history, {empId:prevUser.empId, assignedTo:prevUser.assignedTo, fromDate: prevUser.date, toDate:date, accessories: prevUser.accessories, laptopName, systemId }]
     }});
   }
     const finalData = await Laptops.find({});
