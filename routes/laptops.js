@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllItems, addNewLaptop, reAssign, deleteLaptop, createAdmin, login} from '../controllers/laptopController.js';
+import { getAllItems, addNewLaptop, reAssign, deleteLaptop, createAdmin, getHistory, login} from '../controllers/laptopController.js';
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = Router();
@@ -62,6 +62,6 @@ router.delete("/delete/:id",authMiddleware,deleteLaptop );
 //  * @access public
 //  */
 
-// router.get("/history/:id",authMiddleware, getHistory)
+router.get("/history/:id", getHistory)
 
 export { router };

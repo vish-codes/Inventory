@@ -159,13 +159,13 @@ async function deleteLaptop (req, res) {
 //  * @access public
 //  */
 
-// async function getHistory (req, res) {
-//     const { id } = req.params;
-//     const history = await History.findOne({ laptopId: id });
-//     res.status(200).json({
-//       status: "success",
-//       data: history,
-//     });
-// }
+async function getHistory (req, res) {
+    const { id } = req.params;
+    const history = await Laptops.findById({ _id: id });
+    res.status(200).json({
+      status: "success",
+      data: history,
+    });
+}
 
-export { getAllItems, addNewLaptop, reAssign, deleteLaptop, createAdmin, login }
+export { getAllItems, addNewLaptop, reAssign, deleteLaptop, getHistory, createAdmin, login }
