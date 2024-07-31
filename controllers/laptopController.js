@@ -159,13 +159,37 @@ async function deleteLaptop (req, res) {
 //  * @access public
 //  */
 
-async function getHistory (req, res) {
-    const { id } = req.params;
-    const history = await Laptops.findById({ _id: id });
-    res.status(200).json({
-      status: "success",
-      data: history,
-    });
+async function getHistory(req, res) {
+  try {
+      const { id } = req.params;
+      if (!id) {
+          return res.status(400).json({
+              status: "error",
+              message: "ID parameter is missing",
+          });
+      }
+
+      const history = await Laptops.findById(id);
+
+      if (!history) {
+          return res.status(404).json({
+              status: "error",
+              message: "Laptop not found",
+          });
+      }
+      res.status(200).json({
+          status: "success",
+          data: history,
+      });
+
+  } catch (error) {
+      res.status(500).json({
+          status: "error",
+          message: "An error occurred while retrieving the history",
+          error: error.message,
+      });
+  }
 }
+
 
 export { getAllItems, addNewLaptop, reAssign, deleteLaptop, getHistory, createAdmin, login }
