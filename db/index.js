@@ -29,6 +29,8 @@ const adminSchema = new mongoose.Schema({
 
 
 const laptopHistory = new mongoose.Schema({
+  systemId: { type: String, required: true },
+  laptopName: { type: String, required: true },
   empId: { type: String, required: true },
   assignedTo: { type: String, required: true },
   fromDate:{type: String, required: true},
