@@ -21,6 +21,27 @@ const adminSchema = new mongoose.Schema({
 })
 
 
+/**
+ * Account Schema
+ * @module models/historySchema
+ * @requires mongoose
+ */
+
+
+const laptopHistory = new mongoose.Schema({
+  empId: { type: String, required: true },
+  assignedTo: { type: String, required: true },
+  fromDate:{type: String, required: true},
+  toDate:{type: String, required: true},
+  accessories : [
+    {
+      type: String,
+      default: "None"
+    },
+  ],
+});
+
+
   /**
  * Account Schema
  * @module models/laptopSchema
@@ -48,23 +69,10 @@ const laptopSchema = new mongoose.Schema({
   assignedTo: { type: String, required: true, minLength: 2, trim: true, default: "N/A", required: true },
   empId : { type: String, required: true, trim: true, unique: true },
   remark: { type: String, default: "None" },
+  history: [laptopHistory]
 });
 
-/**
- * Account Schema
- * @module models/historySchema
- * @requires mongoose
- */
 
-
-const laptopHistory = new mongoose.Schema({
-  laptopId: { type: mongoose.Schema.Types.ObjectId, ref: "Laptops" },
-  assignHistory: [
-    {
-      type: String,
-    },
-  ],
-});
 
 laptopSchema.pre("save", function (next){
   if(this.ownerName.length === 0) this.ownerName = "Panorama";
@@ -73,6 +81,9 @@ laptopSchema.pre("save", function (next){
 
 const Admin = mongoose.model("Admin", adminSchema);
 const Laptops = mongoose.model("Laptops", laptopSchema);
-const History = mongoose.model("History", laptopHistory);
+// const History = mongoose.model("History", laptopHistory);
 
-export { Laptops, History, Admin };
+export { Laptops, Admin };
+
+
+// history :- laptop history - username, userId, accessories, date

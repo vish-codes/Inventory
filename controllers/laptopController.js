@@ -1,4 +1,4 @@
-import { Admin, History, Laptops } from "../db/index.js";
+import { Admin, Laptops } from "../db/index.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import z from "zod";
@@ -88,11 +88,9 @@ async function login (req, res){
 
 async function getAllItems(req, res) {
     const details = await Laptops.find({});
-    const history = await History.find({});
     res.status(200).json({
       status: "success",
       data: details,
-      history
   });
 }
 
@@ -106,8 +104,9 @@ async function getAllItems(req, res) {
 
 async function addNewLaptop (req, res) {
     const { laptopName, systemId, assignedTo, ownedBy, ownerName, accessories, remark, empId, date } = req.body; 
-    const laptop = await Laptops.create({ laptopName, systemId, assignedTo, ownedBy, ownerName, accessories, remark, empId, date });
-    await History.create({ laptopId: laptop._id, assignHistory: assignedTo });
+    const laptop = await Laptops.create({ laptopName, systemId, assignedTo, ownedBy, ownerName, accessories, remark, empId, date, history: [{
+      empId ,assignedTo, empId, fromDate:date, toDate: date, accessories
+    }] });
     const laptops = await Laptops.find({})
     res.status(200).json({
     status: "success",
@@ -123,15 +122,15 @@ async function addNewLaptop (req, res) {
 
 
 async function reAssign (req, res)  {
-    const { empId ,assignedTo, remark, accessories} = req.body;
+    const { empId ,assignedTo, date, remark, accessories} = req.body;
     const {id} = req.params
-    const getLaptopUser = await Laptops.findById({_id:id});
-    const laptop = await Laptops.updateOne({_id:id},{empId, assignedTo, remark, accessories});
-    if(getLaptopUser.assignedTo !== assignedTo){
-    const result = await History.updateOne({laptopId:id},{$push:{assignHistory:getLaptopUser.assignedTo}});
-    }
+    const prevUser = await Laptops.findById({_id:id});
+    if(prevUser.assignedTo !== assignedTo){
+    const laptop = await Laptops.findOneAndUpdate({_id:id},{$set:{empId ,assignedTo, date, remark, accessories, history: [...prevUser.history, {empId:prevUser.empId, assignedTo:prevUser.assignedTo, fromDate: prevUser.date, toDate:date, accessories: prevUser.accessories }]
+    }});
+  }
     const finalData = await Laptops.find({});
-  res.status(200).json({ message: "data updated successfully" , data : finalData, prevUserDetails: getLaptopUser  });
+  res.status(200).json({ message: "data updated successfully" , data : finalData, prevUserDetails: prevUser  });
 }
 
 
@@ -146,7 +145,6 @@ async function deleteLaptop (req, res) {
   
     try {
       await Laptops.deleteOne({ _id: id });
-      await History.deleteOne({ laptopId: id });
       const data = await Laptops.find({})
       res.status(200).json({ message: "success on deletion", data });
     } catch (err) {
@@ -155,19 +153,19 @@ async function deleteLaptop (req, res) {
     }
 }
 
-/**
- * @desc get laptops history
- * @route POST /api/v1/history/:id
- * @access public
- */
+// /**
+//  * @desc get laptops history
+//  * @route POST /api/v1/history/:id
+//  * @access public
+//  */
 
-async function getHistory (req, res) {
-    const { id } = req.params;
-    const history = await History.findOne({ laptopId: id });
-    res.status(200).json({
-      status: "success",
-      data: history,
-    });
-}
+// async function getHistory (req, res) {
+//     const { id } = req.params;
+//     const history = await History.findOne({ laptopId: id });
+//     res.status(200).json({
+//       status: "success",
+//       data: history,
+//     });
+// }
 
 export { getAllItems, addNewLaptop, reAssign, deleteLaptop, getHistory, createAdmin, login }
