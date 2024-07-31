@@ -168,4 +168,4 @@ async function deleteLaptop (req, res) {
 //     });
 // }
 
-export { getAllItems, addNewLaptop, reAssign, deleteLaptop, getHistory, createAdmin, login }
+export { getAllItems, addNewLaptop, reAssign, deleteLaptop, createAdmin, login }

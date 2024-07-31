@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllItems, addNewLaptop, reAssign, deleteLaptop, getHistory, createAdmin, login} from '../controllers/laptopController.js';
+import { getAllItems, addNewLaptop, reAssign, deleteLaptop, createAdmin, login} from '../controllers/laptopController.js';
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = Router();
@@ -56,12 +56,12 @@ router.put("/reAssign/:id", reAssign);
 
 router.delete("/delete/:id",authMiddleware,deleteLaptop );
 
-/**
- * @desc get laptops history
- * @route POST /api/v1/history/:id
- * @access public
- */
+// /**
+//  * @desc get laptops history
+//  * @route POST /api/v1/history/:id
+//  * @access public
+//  */
 
-router.get("/history/:id",authMiddleware, getHistory)
+// router.get("/history/:id",authMiddleware, getHistory)
 
 export { router };
