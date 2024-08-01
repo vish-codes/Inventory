@@ -60,7 +60,7 @@ async function login(req, res) {
     }
     console.log('one');
     const userId = response._id;
-    const token = jwt.sign({ userId }, JWT_SECRET);
+    const token = jwt.sign({ userId }, JWT_SECRET, {expiresIn: '12h'  });
     if (token) {
       res.status(200).json({
         message: `user ${response.email} logged in successfully`,
