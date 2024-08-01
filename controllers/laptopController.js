@@ -113,17 +113,7 @@ async function addNewLaptop(req, res) {
     remark,
     empId,
     date,
-    history: [
-      {
-        laptopName,
-        systemId,
-        assignedTo,
-        empId,
-        fromDate: date,
-        toDate: date,
-        accessories,
-      },
-    ],
+    history: [],
   });
   const laptops = await Laptops.find({});
   res.status(200).json({
@@ -172,13 +162,11 @@ async function reAssign(req, res) {
     );
   }
   const finalData = await Laptops.find({});
-  res
-    .status(200)
-    .json({
-      message: 'data updated successfully',
-      data: finalData,
-      prevUserDetails: prevUser,
-    });
+  res.status(200).json({
+    message: 'data updated successfully',
+    data: finalData,
+    prevUserDetails: prevUser,
+  });
 }
 
 /**
