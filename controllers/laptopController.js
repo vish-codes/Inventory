@@ -16,6 +16,7 @@ const loginSchema = z.object({
  * @access public
  */
 
+/*
 async function createAdmin(req, res) {
   const { email, password } = req.body;
   const response = await Admin.findOne({ email });
@@ -32,6 +33,7 @@ async function createAdmin(req, res) {
     res.status(403).json({ message: 'error while creating admin' });
   }
 }
+  */
 
 /** @desc login
  * @route POST /api/v1/login
@@ -231,6 +233,5 @@ export {
   reAssign,
   deleteLaptop,
   getHistory,
-  createAdmin,
   login,
 };

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllItems, addNewLaptop, reAssign, deleteLaptop, createAdmin, getHistory, login} from '../controllers/laptopController.js';
+import { getAllItems, addNewLaptop, reAssign, deleteLaptop, getHistory, login} from '../controllers/laptopController.js';
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = Router();
@@ -10,7 +10,7 @@ const router = Router();
  * @access public
  */
 
-router.post("/adminLogin", createAdmin);
+// router.post("/adminLogin", createAdmin);
 
 
 /**
