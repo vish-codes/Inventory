@@ -37,8 +37,7 @@ router.get("/allLaptops",getAllItems);
  * @access public
  */
 
-router.post("/addLaptop", addNewLaptop);
-// router.post("/addLaptop",authMiddleware, addNewLaptop);
+router.post("/addLaptop",authMiddleware, addNewLaptop);
 
 /**
  * @desc re assign to user
@@ -46,7 +45,7 @@ router.post("/addLaptop", addNewLaptop);
  * @access public
  */
 
-router.put("/reAssign/:id", reAssign);
+router.put("/reAssign/:id", authMiddleware, reAssign);
 
 /**
  * @desc delete entry
