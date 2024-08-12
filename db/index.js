@@ -52,11 +52,10 @@ const laptopHistory = new mongoose.Schema({
 
 
 const laptopSchema = new mongoose.Schema({
-  systemId:{ type: String, required: true, unique:true},
+  systemId:{ type: String, required: true},
   laptopName: {
     type: String,
     required: true,
-    lowercase: true,
     minLength: 3,
   }, 
   date:{type: String, required: true},
