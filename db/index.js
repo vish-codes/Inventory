@@ -70,7 +70,6 @@ const laptopSchema = new mongoose.Schema({
     minLength: 2,
     trim: true,
     default: 'N/A',
-    required: true,
   },
   empId: { type: String, required: true, trim: true },
   remark: { type: String, default: 'None' },
