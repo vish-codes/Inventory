@@ -96,6 +96,7 @@ async function getAllItems(req, res) {
 async function addNewLaptop(req, res) {
   const {
     laptopName,
+    laptopPass,
     systemId,
     assignedTo,
     ownedBy,
@@ -107,6 +108,7 @@ async function addNewLaptop(req, res) {
   } = req.body;
   const laptop = await Laptops.create({
     laptopName,
+    laptopPass,
     systemId,
     assignedTo,
     ownedBy,
@@ -137,7 +139,6 @@ async function reAssign(req, res) {
   const { id } = req.params;
   const prevUser = await Laptops.findById({ _id: id });
   if (prevUser.assignedTo !== assignedTo) {
-    console.log('hiii');
     const laptop = await Laptops.findOneAndUpdate(
       { _id: id },
       {
