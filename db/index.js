@@ -41,6 +41,8 @@ const laptopHistory = new mongoose.Schema({
   ],
 });
 
+// TODO add emp schema here
+
 /**
  * Account Schema
  * @module models/laptopSchema
