@@ -6,7 +6,7 @@ const MONGO_URI = process.env.MONGO_URI;
 
 mongoose
   .connect(MONGO_URI)
-  .then(() => console.log('db connected successfully'));
+  .then(() => console.log('DataBase is connected successfully...!'));
 
 const adminSchema = new mongoose.Schema({
   email: {
@@ -41,7 +41,7 @@ const laptopHistory = new mongoose.Schema({
   ],
 });
 
-// TODO add emp schema here
+
 
 /**
  * Account Schema
@@ -83,10 +83,31 @@ laptopSchema.pre('save', function (next) {
   next();
 });
 
+
+// EmpSchema for enter employee detailed-------------------------
+const empSchema = new mongoose.Schema({
+  empId: { type: String, required: true },
+  empName: { type: String, required: true },
+  empDob: { type: String, required: true },
+  /*   empPhone:{type:Number, required:true}, */
+  empPhone: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        return /^[0-9]+$/.test(v); // Regular expression to ensure only numbers
+      },
+      message: props => `${props.value} is not a valid phone number! Only numeric values are allowed.`
+    }
+  },
+  empEmail: { type: String, required: true },
+  address: { type: String }
+})
 const Admin = mongoose.model('Admin', adminSchema);
 const Laptops = mongoose.model('Laptops', laptopSchema);
+const Employee = mongoose.model('Employee', empSchema)
 // const History = mongoose.model("History", laptopHistory);
 
-export { Laptops, Admin };
+export { Laptops, Admin, Employee };
 
 // history :- laptop history - username, userId, accessories, date
