@@ -34,15 +34,15 @@ router.get("/allLaptops",getAllItems);
 /**
  * @desc add new laptop
  * @route POST /api/v1/addLaptop
- * @access public
+ * @access private
  */
 
-router.post("/addLaptop",authMiddleware, addNewLaptop);
+router.post("/addLaptop", authMiddleware, addNewLaptop);
 
 /**
  * @desc re assign to user
  * @route PUT /api/v1/reAssign/:id
- * @access public
+ * @access private
  */
 
 router.put("/reAssign/:id", authMiddleware, reAssign);
@@ -50,16 +50,16 @@ router.put("/reAssign/:id", authMiddleware, reAssign);
 /**
  * @desc delete entry
  * @route POST /api/v1/delete/:id
- * @access public
+ * @access private
  */
 
-router.delete("/delete/:id",authMiddleware,deleteLaptop );
+router.delete("/delete/:id", authMiddleware, deleteLaptop );
 
-// /**
-//  * @desc get laptops history
-//  * @route POST /api/v1/history/:id
-//  * @access public
-//  */
+/**
+ * @desc get laptops history
+ * @route POST /api/v1/history/:id
+ * @access public
+ */
 
 router.get("/history/:id", getHistory)
 

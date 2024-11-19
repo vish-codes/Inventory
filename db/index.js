@@ -35,13 +35,11 @@ const laptopHistory = new mongoose.Schema({
   toDate: { type: String, required: true },
   accessories: [
     {
-      type: String,
-      default: 'None',
+      name: { type: String, required: true },
+      id: { type: String, required: true }
     },
   ],
 });
-
-
 
 /**
  * Account Schema
@@ -62,8 +60,8 @@ const laptopSchema = new mongoose.Schema({
   ownerName: { type: String, default: 'Panorama' },
   accessories: [
     {
-      type: String,
-      default: 'None',
+      name: { type: String, required: true },
+      id: { type: String, required: true }
     },
   ],
   assignedTo: {
@@ -83,7 +81,6 @@ laptopSchema.pre('save', function (next) {
   next();
 });
 
-
 // EmpSchema for enter employee detailed-------------------------
 const empSchema = new mongoose.Schema({
   empId: { type: String, required: true },
@@ -97,15 +94,16 @@ const empSchema = new mongoose.Schema({
       validator: function (v) {
         return /^[0-9]+$/.test(v); // Regular expression to ensure only numbers
       },
-      message: props => `${props.value} is not a valid phone number! Only numeric values are allowed.`
-    }
+      message: (props) =>
+        `${props.value} is not a valid phone number! Only numeric values are allowed.`,
+    },
   },
   empEmail: { type: String, required: true },
-  address: { type: String }
-})
+  address: { type: String },
+});
 const Admin = mongoose.model('Admin', adminSchema);
 const Laptops = mongoose.model('Laptops', laptopSchema);
-const Employee = mongoose.model('Employee', empSchema)
+const Employee = mongoose.model('Employee', empSchema);
 // const History = mongoose.model("History", laptopHistory);
 
 export { Laptops, Admin, Employee };

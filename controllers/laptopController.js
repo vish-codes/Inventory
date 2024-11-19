@@ -62,7 +62,7 @@ async function login(req, res) {
     }
     console.log('one');
     const userId = response._id;
-    const token = jwt.sign({ userId }, JWT_SECRET, {expiresIn: '12h'  });
+    const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: '12h' });
     if (token) {
       res.status(200).json({
         message: `user ${response.email} logged in successfully`,
@@ -94,36 +94,45 @@ async function getAllItems(req, res) {
  */
 
 async function addNewLaptop(req, res) {
-  const {
-    laptopName,
-    laptopPass,
-    systemId,
-    assignedTo,
-    ownedBy,
-    ownerName,
-    accessories,
-    remark,
-    empId,
-    date,
-  } = req.body;
-  const laptop = await Laptops.create({
-    laptopName,
-    laptopPass,
-    systemId,
-    assignedTo,
-    ownedBy,
-    ownerName,
-    accessories,
-    remark,
-    empId,
-    date,
-    history: [],
-  });
-  const laptops = await Laptops.find({});
-  res.status(200).json({
-    status: 'success',
-    data: laptops,
-  });
+  try {
+    const {
+      laptopName,
+      laptopPass,
+      systemId,
+      assignedTo,
+      ownedBy,
+      ownerName,
+      accessories,
+      remark,
+      empId,
+      date,
+    } = req.body;
+
+    const laptop = await Laptops.create({
+      laptopName,
+      laptopPass,
+      systemId,
+      assignedTo,
+      ownedBy,
+      ownerName,
+      accessories,
+      remark,
+      empId,
+      date,
+      history: [],
+    });
+
+    const laptops = await Laptops.find({});
+    res.status(200).json({
+      status: 'success',
+      data: laptops,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error.message,
+    });
+  }
 }
 
 /**
@@ -191,11 +200,11 @@ async function deleteLaptop(req, res) {
   }
 }
 
-// /**
-//  * @desc get laptops history
-//  * @route POST /api/v1/history/:id
-//  * @access public
-//  */
+/**
+ * @desc get laptops history
+ * @route POST /api/v1/history/:id
+ * @access public
+ */
 
 async function getHistory(req, res) {
   try {
@@ -228,11 +237,4 @@ async function getHistory(req, res) {
   }
 }
 
-export {
-  getAllItems,
-  addNewLaptop,
-  reAssign,
-  deleteLaptop,
-  getHistory,
-  login,
-};
+export { getAllItems, addNewLaptop, reAssign, deleteLaptop, getHistory, login };
